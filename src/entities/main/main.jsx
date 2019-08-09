@@ -19,19 +19,28 @@ const Main = () => {
     const [data, setData] = React.useState({});
     const [cookies, setCookies] = useCookies();
 
-    const getData = () => {
+    const getData = async () => {
         console.log(cookies.jwt)
         const jwt = cookies.jwt;
-        axiosClient.get('/data', {
+
+        const res = await axiosClient.get('/data', {
             headers: {
-                Cookie: `jwt=${jwt}`
+                authorization: jwt
             }
-        }).then(res => {
-            console.log(res)
-            setData(res.body)
-            console.log(data);
         })
-            .catch(e => console.log(e))
+
+        console.log(res);
+        // axiosClient.get('/data', {
+        //     req
+        //     headers: {
+        //         Cookie: `jwt=${jwt}`
+        //     }
+        // }).then(res => {
+        //     console.log(res)
+        //     setData(res.body)
+        //     console.log(data);
+        // })
+        //     .catch(e => console.log(e))
     }
 
     const logout = () => {
